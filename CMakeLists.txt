@@ -29,6 +29,8 @@ set(DEPEND ${DEPEND} cglm)
 ############# 
 
 set(FILES ${FILES}
+	src/objects/hypersphere.c
+
 	src/image.c
 
 	src/main.c

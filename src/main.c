@@ -3,6 +3,7 @@
 #include <cglm/cglm.h>
 
 #include "image.h"
+#include "objects/hypersphere.h"
 
 int main(int argc, char* argv[]) {
 	const size_t image_width = 100, image_height = 100;
@@ -12,19 +13,41 @@ int main(int argc, char* argv[]) {
 		return 1;
 	}
 
+	vec4 camera_pos = { 0.0f, 0.0f, 0.0f, 1.0f };
+	vec4 sphere_pos = { 0.0f, 0.0f, -5.0f, 0.0f };
+
+	Hypersphere sphere;
+	hypersphere_create(&sphere, sphere_pos, 3.0f);
+
+	Ray ray;
+	glm_vec4_copy(camera_pos, ray.origin);
+
 	for(size_t y = 0; y < image_height; y++) {
 		float v = (float)y / (float)image_height;
 		for(size_t x = 0; x < image_width; x++) {
-			vec2 uv = {
-				(float)x / (float)image_width,
-				v
+			vec4 uv = {
+				((float)x / (float)image_width) * 2.0f - 1.0f,
+				(                            v) * 2.0f - 1.0f,
+				-1.0f,
+				0.0f
 			};
 
-			image_set(&image, x, y, (Pixel){
-				.r = uv[0],
-				.g = uv[1],
-				.b = 0.0f
-			});
+			glm_vec4_copy(uv, ray.direction);
+
+			Hit hit = sphere.hit(&sphere, &ray);
+			if(hit.has_hit) {
+				image_set(&image, x, y, (Pixel){
+					.r = 1.0f,
+					.g = 0.0f,
+					.b = 0.0f
+				});
+			} else {
+				image_set(&image, x, y, (Pixel){
+					.r = 0.0f,
+					.g = 0.0f,
+					.b = 0.0f
+				});
+			}
 		}
 	}
 
