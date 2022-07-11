@@ -1,9 +1,11 @@
 #include <stdio.h>
+#include <float.h>
 
 #include <cglm/cglm.h>
 
 #include "image.h"
 #include "objects/hypersphere.h"
+#include "objects/hyperplane.h"
 
 int main(int argc, char* argv[]) {
 	const size_t image_width = 192, image_height = 108;
@@ -20,6 +22,14 @@ int main(int argc, char* argv[]) {
 	Hypersphere sphere;
 	hypersphere_create(&sphere, sphere_pos, 3.0f);
 
+	Hyperplane plane;
+	hyperplane_create(&plane, -4.0f, 1);
+
+	Object* objects[] = {
+		&sphere,
+		&plane
+	};
+
 	Ray ray;
 	glm_vec4_copy(camera_pos, ray.origin);
 
@@ -35,8 +45,15 @@ int main(int argc, char* argv[]) {
 
 			glm_vec4_copy(uv, ray.direction);
 
-			Hit hit = sphere.hit(&sphere, &ray);
-			if(hit.has_hit) {
+			Hit closest_hit = { .has_hit = false, .t = FLT_MAX };
+			for(size_t i = 0; i < sizeof(objects) / sizeof(objects[0]); i++) {
+				Hit hit = objects[i]->hit(objects[i], &ray);
+				if(hit.has_hit && hit.t < closest_hit.t) {
+					closest_hit = hit;
+				}
+			}
+
+			if(closest_hit.has_hit) {
 				image_set(&image, x, y, (Pixel){
 					.r = 1.0f,
 					.g = 0.0f,

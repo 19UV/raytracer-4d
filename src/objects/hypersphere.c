@@ -93,6 +93,7 @@ Hit hypersphere_hit(Hypersphere* this, Ray* ray) {
 
 	Hit res;
 	res.has_hit = true;
+	res.t = t;
 
 	glm_vec4_scale(ray->direction, t, res.location);
 	glm_vec4_add(res.location, ray->origin, res.location);

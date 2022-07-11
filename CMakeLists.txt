@@ -30,6 +30,7 @@ set(DEPEND ${DEPEND} cglm)
 
 set(FILES ${FILES}
 	src/objects/hypersphere.c
+	src/objects/hyperplane.c
 
 	src/image.c
 

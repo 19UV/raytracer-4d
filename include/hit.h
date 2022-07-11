@@ -6,6 +6,8 @@
 
 struct Hit {
 	bool has_hit;
+	
+	float t;
 
 	vec4 location;
 };
