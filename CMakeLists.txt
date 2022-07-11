@@ -32,6 +32,8 @@ set(FILES ${FILES}
 	src/objects/hypersphere.c
 	src/objects/hyperplane.c
 
+	src/scene.c
+
 	src/image.c
 
 	src/main.c

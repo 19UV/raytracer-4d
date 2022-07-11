@@ -4,6 +4,7 @@
 #include <cglm/cglm.h>
 
 #include "image.h"
+#include "scene.h"
 #include "objects/hypersphere.h"
 #include "objects/hyperplane.h"
 
@@ -19,16 +20,16 @@ int main(int argc, char* argv[]) {
 	vec4 camera_pos = { 0.0f, 0.0f, 0.0f, 1.0f };
 	vec4 sphere_pos = { 0.0f, 0.0f, -5.0f, 0.0f };
 
+	Scene scene;
+	scene_create(&scene);
+
 	Hypersphere sphere;
 	hypersphere_create(&sphere, sphere_pos, 3.0f);
+	scene_add(&scene, (Object*)&sphere);
 
 	Hyperplane plane;
 	hyperplane_create(&plane, -4.0f, 1);
-
-	Object* objects[] = {
-		&sphere,
-		&plane
-	};
+	scene_add(&scene, (Object*)&plane);
 
 	Ray ray;
 	glm_vec4_copy(camera_pos, ray.origin);
@@ -46,8 +47,9 @@ int main(int argc, char* argv[]) {
 			glm_vec4_copy(uv, ray.direction);
 
 			Hit closest_hit = { .has_hit = false, .t = FLT_MAX };
-			for(size_t i = 0; i < sizeof(objects) / sizeof(objects[0]); i++) {
-				Hit hit = objects[i]->hit(objects[i], &ray);
+			for(size_t i = 0; i < scene.count; i++) {
+				Object* object = scene.objects[i];
+				Hit hit = object->hit(object, &ray);
 				if(hit.has_hit && hit.t < closest_hit.t) {
 					closest_hit = hit;
 				}
@@ -68,6 +70,8 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
+
+	scene_destroy(&scene);
 
 	if(image_save_png(&image, "./output.png")) {
 		return 1;
