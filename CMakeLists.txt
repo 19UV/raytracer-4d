@@ -18,6 +18,8 @@ set(DEPEND ${DEPEND} cglm)
 ############# 
 
 set(FILES ${FILES}
+	src/image.c
+
 	src/main.c
 )
 
