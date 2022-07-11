@@ -6,7 +6,8 @@
 #include "objects/hypersphere.h"
 
 int main(int argc, char* argv[]) {
-	const size_t image_width = 100, image_height = 100;
+	const size_t image_width = 192, image_height = 108;
+	const float aspect_ratio = (float)image_width / (float)image_height;
 
 	Image image;
 	if(image_create(&image, image_width, image_height)) {
@@ -26,10 +27,10 @@ int main(int argc, char* argv[]) {
 		float v = (float)y / (float)image_height;
 		for(size_t x = 0; x < image_width; x++) {
 			vec4 uv = {
-				((float)x / (float)image_width) * 2.0f - 1.0f,
-				(                            v) * 2.0f - 1.0f,
-				-1.0f,
-				0.0f
+				(((float)x / (float)image_width) * 2.0f - 1.0f) * aspect_ratio,
+				 (                            v) * 2.0f - 1.0f,
+				 -1.0f,
+				 0.0f
 			};
 
 			glm_vec4_copy(uv, ray.direction);
