@@ -3,15 +3,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <stddef.h>
+#include <assert.h>
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb/stb_image_write.h>
 
 static size_t get_offset(const Image* this, size_t x, size_t y) {
+	assert(this != NULL);
+	assert(x < this->width);
+	assert(y < this->height);
+
 	return (this->width * y) + x;
 }
 
 int image_create(Image* this, size_t width, size_t height) {
+	assert(this != NULL);
+
 	const size_t pixel_count = width * height;
 
 	this->width = 0;
@@ -37,16 +45,25 @@ int image_create(Image* this, size_t width, size_t height) {
 }
 
 void image_destroy(Image* this) {
+	assert(this != NULL);
+
 	free(this->data);
 }
 
 void image_set(Image* this, size_t x, size_t y, Pixel pixel) {
+	// Assert that the pixel values are in bounds
+	assert((pixel.r >= 0.0f) && (pixel.r <= 255.0f));
+	assert((pixel.g >= 0.0f) && (pixel.g <= 255.0f));
+	assert((pixel.b >= 0.0f) && (pixel.b <= 255.0f));
+
+	// Offset already asserts that this != NULL
 	const size_t offset = get_offset(this, x, y);
 
 	this->data[offset] = pixel;
 }
 
 Pixel image_get(const Image* this, size_t x, size_t y) {
+	// Offset already asserts
 	const size_t offset = get_offset(this, x, y);
 
 	return this->data[offset];
@@ -54,6 +71,8 @@ Pixel image_get(const Image* this, size_t x, size_t y) {
 
 
 int image_save_png(const Image* this, const char* file_path) {
+	assert(this != NULL);
+
 	const size_t pixel_count = this->width * this->height;
 
 	const float* input = (const float*)this->data;

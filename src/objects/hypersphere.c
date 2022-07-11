@@ -1,11 +1,17 @@
 #include "objects/hypersphere.h"
 
 #include <string.h>
+#include <stddef.h>
+#include <assert.h>
 
 int hypersphere_create(Hypersphere* this, vec4 position, float radius) {
+	assert(this != NULL);
+
 	this->type = Sphere4D;
 
 	glm_vec4_copy(position, this->position);
+
+	assert(radius >= 0.0f);
 	this->radius = radius;
 
 	this->hit = hypersphere_hit;
@@ -63,6 +69,9 @@ int hypersphere_create(Hypersphere* this, vec4 position, float radius) {
  *  Lets implement it!
 */
 Hit hypersphere_hit(Hypersphere* this, Ray* ray) {
+	assert(this != NULL);
+	assert(this->type == Sphere4D);
+
 	vec4 oc;
 	glm_vec4_sub(ray->origin, this->position, oc);
 
