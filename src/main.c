@@ -7,6 +7,7 @@
 
 #include "scene.h"
 #include "scene_deserializer.h"
+#include "scene_print.h"
 
 #include "objects/hypersphere.h"
 #include "objects/hyperplane.h"
@@ -25,6 +26,7 @@ int main(int argc, char* argv[]) {
 
 	Scene scene;
 	scene_deserialize(&scene, "./scenes/sphere.txt");
+	scene_print(&scene);
 
 	Ray ray;
 	glm_vec4_copy(camera_pos, ray.origin);

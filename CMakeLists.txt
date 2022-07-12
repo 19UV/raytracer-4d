@@ -34,6 +34,7 @@ set(FILES ${FILES}
 
 	src/scene.c
 	src/scene_deserializer.c
+	src/scene_print.c
 
 	src/image.c
 
