@@ -102,5 +102,8 @@ Hit hypersphere_hit(Hypersphere* this, Ray* ray) {
 
 	glm_vec3_copy(this->color, res.color);
 
+	glm_vec4_sub(res.location, this->position, res.normal);
+	glm_vec4_normalize(res.normal);
+
 	return res;
 }

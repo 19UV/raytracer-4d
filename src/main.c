@@ -54,9 +54,9 @@ int main(int argc, char* argv[]) {
 
 			if(closest_hit.has_hit) {
 				image_set(&image, x, y, (Pixel){
-					.r = closest_hit.color[0],
-					.g = closest_hit.color[1],
-					.b = closest_hit.color[2]
+					.r = (closest_hit.normal[0] + 1.0f) / 2.0f,
+					.g = (closest_hit.normal[1] + 1.0f) / 2.0f,
+					.b = (closest_hit.normal[2] + 1.0f) / 2.0f
 				});
 			} else {
 				image_set(&image, x, y, (Pixel){

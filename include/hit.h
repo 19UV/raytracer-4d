@@ -13,5 +13,6 @@ struct Hit {
 
 	// TODO: Should this be Pixel instead?
 	vec3 color;
+	vec4 normal;
 };
 typedef struct Hit Hit;

@@ -65,5 +65,9 @@ Hit hyperplane_hit(Hyperplane* this, Ray* ray) {
 
 	glm_vec3_copy(this->color, res.color);
 
+	vec4 normal = {0.0f, 0.0f, 0.0f, 0.0f};
+	normal[dimension] = ray->origin[dimension] > this->location ? 1.0f : -1.0f;
+	glm_vec4_copy(normal, res.normal);
+
 	return res;
 }
