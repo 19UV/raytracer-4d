@@ -21,6 +21,12 @@ static bool parse_usize(FILE* file, size_t* dest) {
 	return fscanf(file, "%zu", dest) == 1;
 }
 
+static bool parse_vec3(FILE* file, vec3 dest) {
+	return fscanf(file, "%f %f %f",
+		&dest[0], &dest[1], &dest[2]
+	) == 3;
+}
+
 static bool parse_vec4(FILE* file, vec4 dest) {
 	return fscanf(file, "%f %f %f %f",
 		&dest[0], &dest[1], &dest[2], &dest[3]
@@ -36,10 +42,13 @@ static Hypersphere* parse_hypersphere(FILE* file) {
 	vec4 position;
 	float radius;
 
+	vec3 color;
+
 	assert(parse_vec4(file, position));
 	assert(parse_float(file, &radius));
+	assert(parse_vec3(file, color));
 
-	hypersphere_create(hypersphere, position, radius);
+	hypersphere_create(hypersphere, position, radius, color);
 
 	return hypersphere;
 }
@@ -52,11 +61,14 @@ static Hyperplane* parse_hyperplane(FILE* file) {
 
 	float location;
 	size_t axis;
+	
+	vec3 color;
 
 	assert(parse_float(file, &location));
 	assert(parse_usize(file, &axis));
+	assert(parse_vec3(file, color));
 
-	hyperplane_create(hyperplane, location, axis);
+	hyperplane_create(hyperplane, location, axis, color);
 
 	return hyperplane;
 }

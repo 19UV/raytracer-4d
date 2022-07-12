@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <assert.h>
 
-int hypersphere_create(Hypersphere* this, vec4 position, float radius) {
+int hypersphere_create(Hypersphere* this, vec4 position, float radius, vec3 color) {
 	assert(this != NULL);
 
 	this->type = Sphere4D;
@@ -13,6 +13,8 @@ int hypersphere_create(Hypersphere* this, vec4 position, float radius) {
 
 	assert(radius >= 0.0f);
 	this->radius = radius;
+
+	glm_vec3_copy(color, this->color);
 
 	this->hit = hypersphere_hit;
 
@@ -97,6 +99,8 @@ Hit hypersphere_hit(Hypersphere* this, Ray* ray) {
 
 	glm_vec4_scale(ray->direction, t, res.location);
 	glm_vec4_add(res.location, ray->origin, res.location);
+
+	glm_vec3_copy(this->color, res.color);
 
 	return res;
 }

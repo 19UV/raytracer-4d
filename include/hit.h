@@ -10,5 +10,8 @@ struct Hit {
 	float t;
 
 	vec4 location;
+
+	// TODO: Should this be Pixel instead?
+	vec3 color;
 };
 typedef struct Hit Hit;

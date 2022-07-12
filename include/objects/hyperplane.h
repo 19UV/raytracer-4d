@@ -13,8 +13,10 @@ struct Hyperplane {
 
 	size_t dimension;
 	float location;
+
+	vec3 color;
 };
 typedef struct Hyperplane Hyperplane;
 
-int hyperplane_create(Hyperplane* this, float location, size_t dimension);
+int hyperplane_create(Hyperplane* this, float location, size_t dimension, vec3 color);
 Hit hyperplane_hit(Hyperplane* this, Ray* ray);

@@ -31,6 +31,14 @@ static void print_hypersphere(Hypersphere* object) {
 	printf("\tRadius: %f\n",
 		object->radius
 	);
+
+	// TODO: Maybe do hex encoding?
+	// TODO: Have printing certain types (ex a vec4 be a helper function)
+	printf("\tColor: (%f %f %f)\n",
+		object->color[0],
+		object->color[1],
+		object->color[2]
+	);
 }
 
 static void print_hyperplane(Hyperplane* object) {
@@ -46,6 +54,12 @@ static void print_hyperplane(Hyperplane* object) {
 	// TODO: Find a better name for this
 	printf("\tAxis of Restraint: %c\n",
 		axis_lookup[object->dimension]
+	);
+
+	printf("\tColor: (%f %f %f)\n",
+		object->color[0],
+		object->color[1],
+		object->color[2]
 	);
 }
 
