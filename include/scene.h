@@ -13,4 +13,4 @@ typedef struct Scene Scene;
 int scene_create(Scene* this);
 void scene_destroy(Scene* this);
 
-int scene_add(Scene* this, const Object* object);
+int scene_add(Scene* this, Object* object);

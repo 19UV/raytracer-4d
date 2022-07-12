@@ -33,6 +33,7 @@ set(FILES ${FILES}
 	src/objects/hyperplane.c
 
 	src/scene.c
+	src/scene_deserializer.c
 
 	src/image.c
 
