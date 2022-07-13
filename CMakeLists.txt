@@ -29,10 +29,10 @@ set(DEPEND ${DEPEND} cglm)
 ############# 
 
 set(FILES ${FILES}
+	src/objects/group.c
 	src/objects/hypersphere.c
 	src/objects/hyperplane.c
 
-	src/scene.c
 	src/scene_deserializer.c
 	src/scene_print.c
 

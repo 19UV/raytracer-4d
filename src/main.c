@@ -5,12 +5,13 @@
 
 #include "image.h"
 
-#include "scene.h"
+#include "objects/group.h"
+#include "objects/hypersphere.h"
+#include "objects/hyperplane.h"
+
 #include "scene_deserializer.h"
 #include "scene_print.h"
 
-#include "objects/hypersphere.h"
-#include "objects/hyperplane.h"
 
 int main(int argc, char* argv[]) {
 	const size_t image_width = 192, image_height = 108;
@@ -24,7 +25,7 @@ int main(int argc, char* argv[]) {
 	vec4 camera_pos = { 0.0f, 0.0f, 0.0f, 1.0f };
 	vec4 sphere_pos = { 0.0f, 0.0f, -5.0f, 0.0f };
 
-	Scene scene;
+	Group scene;
 	scene_deserialize(&scene, "./scenes/sphere.txt");
 	scene_print(&scene);
 
@@ -71,7 +72,7 @@ int main(int argc, char* argv[]) {
 	for(size_t i = 0; i < scene.count; i++) {
 		free(scene.objects[i]);
 	}
-	scene_destroy(&scene);
+	group_destroy(&scene);
 
 	if(image_save_png(&image, "./output.png")) {
 		return 1;

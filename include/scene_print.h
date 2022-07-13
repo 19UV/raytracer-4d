@@ -1,5 +1,5 @@
 #pragma once
 
-#include "scene.h"
+#include "objects/group.h"
 
-void scene_print(Scene* scene);
+void scene_print(Group* scene);

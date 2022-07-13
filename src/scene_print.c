@@ -63,7 +63,7 @@ static void print_hyperplane(Hyperplane* object) {
 	);
 }
 
-void scene_print(Scene* scene) {
+void scene_print(Group* scene) {
 	for(size_t i = 0; i < scene->count; i++) {
 		Object* object = scene->objects[i];
 		printf("%s <0x%p>\n",

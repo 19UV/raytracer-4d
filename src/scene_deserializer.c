@@ -73,7 +73,7 @@ static Hyperplane* parse_hyperplane(FILE* file) {
 	return hyperplane;
 }
 
-int scene_deserialize(Scene* scene, const char* file_path) {
+int scene_deserialize(Group* scene, const char* file_path) {
 	assert(scene != NULL);
 
 	FILE* file = fopen(file_path, "r");
@@ -81,7 +81,7 @@ int scene_deserialize(Scene* scene, const char* file_path) {
 		return 1;
 	}
 
-	scene_create(scene);
+	group_create(scene);
 
 	// TODO: This is unsafe, improve
 	char identifier_buffer[IDENTIFIER_BUFFER_LENGTH] = {0};
@@ -101,7 +101,7 @@ int scene_deserialize(Scene* scene, const char* file_path) {
 			return 1;
 		}
 
-		scene_add(scene, object);
+		group_add(scene, object);
 	}
 
 	fclose(file);

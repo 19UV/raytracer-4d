@@ -1,5 +1,5 @@
 #pragma once
 
-#include "scene.h"
+#include "objects/group.h"
 
-int scene_deserialize(Scene* scene, const char* file_path);
+int scene_deserialize(Group* scene, const char* file_path);
