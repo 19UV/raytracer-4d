@@ -2,7 +2,7 @@
 
 #include <cglm/cglm.h>
 
-#include "image.h"
+#include "material.h"
 #include "objects/object.h"
 
 struct Hyperplane {
@@ -15,9 +15,9 @@ struct Hyperplane {
 	size_t dimension;
 	float location;
 
-	Pixel color;
+	Material material;
 };
 typedef struct Hyperplane Hyperplane;
 
-int hyperplane_create(Hyperplane* this, float location, size_t dimension, Pixel color);
+int hyperplane_create(Hyperplane* this, float location, size_t dimension, Material material);
 Hit hyperplane_hit(Hyperplane* this, Ray* ray);

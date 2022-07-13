@@ -56,7 +56,10 @@ static Hypersphere* parse_hypersphere(FILE* file) {
 	assert(parse_float(file, &radius));
 	assert(parse_pixel(file, &color));
 
-	hypersphere_create(hypersphere, position, radius, color);
+	// TODO: Populate roughness
+	Material material = { .color = color };
+
+	hypersphere_create(hypersphere, position, radius, material);
 
 	return hypersphere;
 }
@@ -76,7 +79,10 @@ static Hyperplane* parse_hyperplane(FILE* file) {
 	assert(parse_usize(file, &axis));
 	assert(parse_pixel(file, &color));
 
-	hyperplane_create(hyperplane, location, axis, color);
+	// TODO: Populate roughness
+	Material material = { .color = color };
+
+	hyperplane_create(hyperplane, location, axis, material);
 
 	return hyperplane;
 }
