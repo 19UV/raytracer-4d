@@ -12,6 +12,23 @@
 #include "scene_deserializer.h"
 #include "scene_print.h"
 
+Pixel trace_ray(Group* scene, Ray* ray, size_t depth) {
+	Hit hit = group_hit(scene, ray);
+
+	if(hit.has_hit) {
+		return (Pixel){
+			.r = hit.normal[0] * 0.5f + 0.5f,
+			.g = hit.normal[1] * 0.5f + 0.5f,
+			.b = hit.normal[2] * 0.5f + 0.5f
+		};
+	} else {
+		return (Pixel){
+			.r = 0.5f,
+			.g = 0.5f,
+			.b = 0.5f
+		};
+	}
+}
 
 int main(int argc, char* argv[]) {
 	const size_t image_width = 1080, image_height = 1080;
@@ -42,23 +59,11 @@ int main(int argc, char* argv[]) {
 				 0.0f
 			};
 
-			glm_vec4_copy(uv, ray.direction);
+			glm_vec4_normalize_to(uv, ray.direction);
 
-			Hit hit = group_hit(&scene, &ray);
+			Pixel pixel = trace_ray(&scene, &ray, 100);
 
-			if(hit.has_hit) {
-				image_set(&image, x, y, (Pixel){
-					.r = hit.color[0],
-					.g = hit.color[1],
-					.b = hit.color[2]
-				});
-			} else {
-				image_set(&image, x, y, (Pixel){
-					.r = 0.0f,
-					.g = 0.0f,
-					.b = 0.0f
-				});
-			}
+			image_set(&image, x, y, pixel);
 		}
 	}
 
