@@ -29,6 +29,8 @@ set(DEPEND ${DEPEND} cglm)
 ############# 
 
 set(FILES ${FILES}
+	src/util/random.c
+
 	src/objects/group.c
 	src/objects/hypersphere.c
 	src/objects/hyperplane.c
