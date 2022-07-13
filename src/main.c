@@ -5,6 +5,8 @@
 
 #include "image.h"
 
+#include "util/random.h"
+
 #include "objects/group.h"
 #include "objects/hypersphere.h"
 #include "objects/hyperplane.h"
@@ -13,13 +15,24 @@
 #include "scene_print.h"
 
 Pixel trace_ray(Group* scene, Ray* ray, size_t depth) {
-	Hit hit = group_hit(scene, ray);
-
-	if(hit.has_hit) {
+	if(depth == 0) {
 		return (Pixel){
-			.r = hit.normal[0] * 0.5f + 0.5f,
-			.g = hit.normal[1] * 0.5f + 0.5f,
-			.b = hit.normal[2] * 0.5f + 0.5f
+			.r = 0.0f,
+			.g = 0.0f,
+			.b = 0.0f
+		};
+	}
+
+	Hit hit = group_hit(scene, ray);
+	if(hit.has_hit) {
+		vec4 target;
+		unit_sphere_4d_random(target);
+		glm_vec4_add(target, hit.normal, target);
+
+		return (Pixel){
+			.r = target[0] * 0.25f + 0.5f,
+			.g = target[1] * 0.25f + 0.5f,
+			.b = target[2] * 0.25f + 0.5f
 		};
 	} else {
 		return (Pixel){
@@ -33,6 +46,8 @@ Pixel trace_ray(Group* scene, Ray* ray, size_t depth) {
 int main(int argc, char* argv[]) {
 	const size_t image_width = 1080, image_height = 1080;
 	const float aspect_ratio = (float)image_width / (float)image_height;
+
+	const size_t max_depth = 100;
 
 	Image image;
 	if(image_create(&image, image_width, image_height)) {
@@ -61,7 +76,7 @@ int main(int argc, char* argv[]) {
 
 			glm_vec4_normalize_to(uv, ray.direction);
 
-			Pixel pixel = trace_ray(&scene, &ray, 100);
+			Pixel pixel = trace_ray(&scene, &ray, max_depth);
 
 			image_set(&image, x, y, pixel);
 		}

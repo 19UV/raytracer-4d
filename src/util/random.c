@@ -22,5 +22,6 @@ void vec4_random(vec4 vector) {
 
 void unit_sphere_4d_random(vec4 vector) {
 	vec4_random(vector);
+	glm_vec4_subs(vector, 0.5f, vector);
 	glm_vec4_normalize(vector);
 }
