@@ -92,6 +92,11 @@ Hit hypersphere_hit(Hypersphere* this, Ray* ray) {
 	}
 
 	float t = (-b - sqrtf(discriminant)) / (2.0f * a);
+	if(t <= 0.0f) {
+		return (Hit){
+			.has_hit = false
+		};
+	}
 
 	Hit res;
 	res.has_hit = true;

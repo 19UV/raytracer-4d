@@ -48,7 +48,7 @@ Hit hyperplane_hit(Hyperplane* this, Ray* ray) {
 	const size_t dimension = this->dimension;
 
 	float t = (this->location - ray->origin[dimension]) / ray->direction[dimension];
-	if(t < 0.0f) {
+	if(t <= 0.0f) {
 		return (Hit){
 			.has_hit = false
 		};
