@@ -44,24 +44,13 @@ int main(int argc, char* argv[]) {
 
 			glm_vec4_copy(uv, ray.direction);
 
-			Hit closest_hit = { .has_hit = false, .t = FLT_MAX };
-			for(size_t i = 0; i < scene.count; i++) {
-				Object* object = scene.objects[i];
-				Hit hit = object->hit(object, &ray);
-				if(hit.has_hit && hit.t < closest_hit.t) {
-					closest_hit = hit;
-				}
-			}
+			Hit hit = group_hit(&scene, &ray);
 
-			if(closest_hit.has_hit) {
-				glm_vec4_normalize(closest_hit.normal);
-				glm_vec4_normalize(ray.direction);
-
-				float brightness = fabsf(glm_vec3_dot(closest_hit.normal, ray.direction));
+			if(hit.has_hit) {
 				image_set(&image, x, y, (Pixel){
-					.r = closest_hit.color[0] * brightness,
-					.g = closest_hit.color[1] * brightness,
-					.b = closest_hit.color[2] * brightness
+					.r = hit.color[0],
+					.g = hit.color[1],
+					.b = hit.color[2]
 				});
 			} else {
 				image_set(&image, x, y, (Pixel){
