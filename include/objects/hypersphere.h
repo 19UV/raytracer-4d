@@ -2,6 +2,7 @@
 
 #include <cglm/cglm.h>
 
+#include "image.h"
 #include "objects/object.h"
 
 struct Hypersphere {
@@ -14,9 +15,9 @@ struct Hypersphere {
 	vec4 position;
 	float radius;
 
-	vec3 color;
+	Pixel color;
 };
 typedef struct Hypersphere Hypersphere;
 
-int hypersphere_create(Hypersphere* this, vec4 position, float radius, vec3 color);
+int hypersphere_create(Hypersphere* this, vec4 position, float radius, Pixel color);
 Hit hypersphere_hit(Hypersphere* this, Ray* ray);

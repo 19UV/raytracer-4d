@@ -35,9 +35,9 @@ static void print_hypersphere(Hypersphere* object) {
 	// TODO: Maybe do hex encoding?
 	// TODO: Have printing certain types (ex a vec4 be a helper function)
 	printf("\tColor: (%f %f %f)\n",
-		object->color[0],
-		object->color[1],
-		object->color[2]
+		object->color.r,
+		object->color.g,
+		object->color.b
 	);
 }
 
@@ -57,9 +57,9 @@ static void print_hyperplane(Hyperplane* object) {
 	);
 
 	printf("\tColor: (%f %f %f)\n",
-		object->color[0],
-		object->color[1],
-		object->color[2]
+		object->color.r,
+		object->color.g,
+		object->color.b
 	);
 }
 

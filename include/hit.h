@@ -4,6 +4,8 @@
 
 #include <cglm/cglm.h>
 
+#include "image.h"
+
 struct Hit {
 	bool has_hit;
 	
@@ -11,8 +13,7 @@ struct Hit {
 
 	vec4 location;
 
-	// TODO: Should this be Pixel instead?
-	vec3 color;
+	Pixel color;
 	vec4 normal;
 };
 typedef struct Hit Hit;

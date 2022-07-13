@@ -7,6 +7,8 @@
 #include <stdbool.h>
 #include <assert.h>
 
+#include "image.h"
+
 #include "objects/object.h"
 #include "objects/hypersphere.h"
 #include "objects/hyperplane.h"
@@ -33,6 +35,12 @@ static bool parse_vec4(FILE* file, vec4 dest) {
 	) == 4;
 }
 
+static bool parse_pixel(FILE* file, Pixel* dest) {
+	return fscanf(file, "%f %f %f",
+		&dest->r, &dest->g, &dest->b
+	) == 3;
+}
+
 static Hypersphere* parse_hypersphere(FILE* file) {
 	Hypersphere* hypersphere = malloc(sizeof(Hypersphere));
 	if(hypersphere == NULL) {
@@ -42,11 +50,11 @@ static Hypersphere* parse_hypersphere(FILE* file) {
 	vec4 position;
 	float radius;
 
-	vec3 color;
+	Pixel color;
 
 	assert(parse_vec4(file, position));
 	assert(parse_float(file, &radius));
-	assert(parse_vec3(file, color));
+	assert(parse_pixel(file, &color));
 
 	hypersphere_create(hypersphere, position, radius, color);
 
@@ -62,11 +70,11 @@ static Hyperplane* parse_hyperplane(FILE* file) {
 	float location;
 	size_t axis;
 	
-	vec3 color;
+	Pixel color;
 
 	assert(parse_float(file, &location));
 	assert(parse_usize(file, &axis));
-	assert(parse_vec3(file, color));
+	assert(parse_pixel(file, &color));
 
 	hyperplane_create(hyperplane, location, axis, color);
 

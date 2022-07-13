@@ -3,7 +3,7 @@
 #include <stddef.h>
 #include <assert.h>
 
-int hyperplane_create(Hyperplane* this, float location, size_t dimension, vec3 color) {
+int hyperplane_create(Hyperplane* this, float location, size_t dimension, Pixel color) {
 	assert(this != NULL);
 	assert((dimension >= 0) && (dimension < 4));
 
@@ -12,7 +12,7 @@ int hyperplane_create(Hyperplane* this, float location, size_t dimension, vec3 c
 	this->dimension = dimension;
 	this->location = location;
 
-	glm_vec3_copy(color, this->color);
+	this->color = color;
 
 	this->hit = hyperplane_hit;
 
@@ -63,7 +63,7 @@ Hit hyperplane_hit(Hyperplane* this, Ray* ray) {
 	glm_vec4_scale(ray->direction, t, res.location);
 	glm_vec4_add(res.location, ray->origin, res.location);
 
-	glm_vec3_copy(this->color, res.color);
+	res.color = this->color;
 
 	vec4 normal = {0.0f, 0.0f, 0.0f, 0.0f};
 	normal[dimension] = ray->origin[dimension] > this->location ? 1.0f : -1.0f;
