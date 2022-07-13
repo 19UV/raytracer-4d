@@ -29,25 +29,35 @@ Pixel trace_ray(Group* scene, Ray* ray, size_t depth) {
 		unit_sphere_4d_random(target);
 		glm_vec4_add(target, hit.normal, target);
 
-		return (Pixel){
-			.r = target[0] * 0.25f + 0.5f,
-			.g = target[1] * 0.25f + 0.5f,
-			.b = target[2] * 0.25f + 0.5f
-		};
-	} else {
-		return (Pixel){
-			.r = 0.5f,
-			.g = 0.5f,
-			.b = 0.5f
-		};
+		Ray child_ray;
+		glm_vec4_copy(hit.location, child_ray.origin);
+		glm_vec4_copy(target, child_ray.direction);
+
+		Pixel child_pixel = trace_ray(scene, &child_ray, depth - 1);
+		child_pixel.r *= 0.5f;
+		child_pixel.g *= 0.5f;
+		child_pixel.b *= 0.5f;
+
+		return child_pixel;
 	}
+
+	// Don't need to normalize, because we assume that it already has been
+	float t = 0.5f * (ray->direction[1] + 1.0f);
+	Pixel res;
+
+	Pixel from = { .r = 1.0f, .g = 1.0f, .b = 1.0f };
+	Pixel to   = { .r = 0.5f, .g = 0.7f, .b = 1.0f };
+
+	glm_vec3_lerp((float*)&from, (float*)&to, t, (float*)&res);
+
+	return res;
 }
 
 int main(int argc, char* argv[]) {
 	const size_t image_width = 1080, image_height = 1080;
 	const float aspect_ratio = (float)image_width / (float)image_height;
 
-	const size_t max_depth = 100;
+	const size_t max_depth = 500;
 
 	Image image;
 	if(image_create(&image, image_width, image_height)) {
