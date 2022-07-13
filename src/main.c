@@ -14,7 +14,7 @@
 
 
 int main(int argc, char* argv[]) {
-	const size_t image_width = 192, image_height = 108;
+	const size_t image_width = 1080, image_height = 1080;
 	const float aspect_ratio = (float)image_width / (float)image_height;
 
 	Image image;
@@ -54,10 +54,14 @@ int main(int argc, char* argv[]) {
 			}
 
 			if(closest_hit.has_hit) {
+				glm_vec4_normalize(closest_hit.normal);
+				glm_vec4_normalize(ray.direction);
+
+				float brightness = fabsf(glm_vec3_dot(closest_hit.normal, ray.direction));
 				image_set(&image, x, y, (Pixel){
-					.r = (closest_hit.normal[0] + 1.0f) / 2.0f,
-					.g = (closest_hit.normal[1] + 1.0f) / 2.0f,
-					.b = (closest_hit.normal[2] + 1.0f) / 2.0f
+					.r = closest_hit.color[0] * brightness,
+					.g = closest_hit.color[1] * brightness,
+					.b = closest_hit.color[2] * brightness
 				});
 			} else {
 				image_set(&image, x, y, (Pixel){
