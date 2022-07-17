@@ -42,7 +42,7 @@ static bool parse_pixel(FILE* file, Pixel* dest) {
 }
 
 static Hypersphere* parse_hypersphere(FILE* file) {
-	Hypersphere* hypersphere = malloc(sizeof(Hypersphere));
+	Hypersphere* hypersphere = MALLOC(sizeof(Hypersphere));
 	if(hypersphere == NULL) {
 		return NULL;
 	}
@@ -65,7 +65,7 @@ static Hypersphere* parse_hypersphere(FILE* file) {
 }
 
 static Hyperplane* parse_hyperplane(FILE* file) {
-	Hyperplane* hyperplane = malloc(sizeof(Hyperplane));
+	Hyperplane* hyperplane = MALLOC(sizeof(Hyperplane));
 	if(hyperplane == NULL) {
 		return NULL;
 	}

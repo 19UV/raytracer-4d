@@ -93,7 +93,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	for(size_t i = 0; i < scene.count; i++) {
-		free(scene.objects[i]);
+		FREE(scene.objects[i]);
 	}
 	group_destroy(&scene);
 
@@ -102,6 +102,8 @@ int main(int argc, char* argv[]) {
 	}
 
 	image_destroy(&image);
+
+	check_memoryleaks();
 
 	return 0;
 }

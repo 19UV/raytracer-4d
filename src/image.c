@@ -6,6 +6,10 @@
 #include <stddef.h>
 #include <assert.h>
 
+#include "malloc.h"
+
+// Not enforcing the allocator here, because we assume that stb
+// is well written.
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb/stb_image_write.h>
 
@@ -25,7 +29,7 @@ int image_create(Image* this, size_t width, size_t height) {
 	this->width = 0;
 	this->height = 0;
 
-	this->data = malloc(pixel_count * sizeof(Pixel));
+	this->data = MALLOC(pixel_count * sizeof(Pixel));
 	if(this->data == NULL) {
 		return 1;
 	}
@@ -47,7 +51,7 @@ int image_create(Image* this, size_t width, size_t height) {
 void image_destroy(Image* this) {
 	assert(this != NULL);
 
-	free(this->data);
+	FREE(this->data);
 }
 
 void image_set(Image* this, size_t x, size_t y, Pixel pixel) {

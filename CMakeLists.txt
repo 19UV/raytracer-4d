@@ -29,6 +29,8 @@ set(DEPEND ${DEPEND} cglm)
 ############# 
 
 set(FILES ${FILES}
+	src/malloc.c
+
 	src/util/random.c
 
 	src/objects/group.c

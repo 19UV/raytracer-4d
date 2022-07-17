@@ -19,7 +19,7 @@ int group_create(Group* this) {
 
 void group_destroy(Group* this) {
 	if(this->objects != NULL) {
-		free(this->objects);
+		FREE(this->objects);
 	}
 }
 
@@ -42,7 +42,7 @@ Hit group_hit(Group* this, Ray* ray) {
 }
 
 int group_add(Group* this, Object* object) {
-	this->objects = realloc(this->objects, (this->count + 1) * sizeof(Object*));
+	this->objects = REALLOC(this->objects, (this->count + 1) * sizeof(Object*));
 	if(this->objects == NULL) {
 		// The memory won't be freed, I would like a better handling system for out of memory
 		return 1;
