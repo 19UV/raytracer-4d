@@ -27,3 +27,24 @@ jobs:
 
     - name: Build
       run: cmake --build build --config=${{ env.BUILD_TYPE }}
+
+    - name: Setup Artifact
+      shell: bash
+      run: |
+        mkdir artifact/
+
+        if [[ $RUNNER_OS == "Windows" ]]; then
+          cp build/Release/raytracer4d.exe artifact/
+        fi
+
+        if [[ $RUNNER_OS == "Linux" ]]; then
+          cp build/raytracer4d artifact/
+        fi
+        
+        cp scenes/ artifact/
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Raytracer-${{ runner.os }}
+        path: artifact/
