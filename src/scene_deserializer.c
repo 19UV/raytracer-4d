@@ -49,12 +49,16 @@ static Hypersphere* parse_hypersphere(FILE* file) {
 
 	vec4 position;
 	float radius;
-
 	Pixel color;
 
-	assert(parse_vec4(file, position));
-	assert(parse_float(file, &radius));
-	assert(parse_pixel(file, &color));
+	bool success = true;
+	success = success && parse_vec4(file, position);
+	success = success && parse_float(file, &radius);
+	success = success && parse_pixel(file, &color);
+	if(!success) {
+		fprintf(stderr, "[ERROR] Failed to Parse Arguments of Hypersphere.\n");
+		return NULL;
+	}
 
 	// TODO: Populate roughness
 	Material material = { .color = color };
@@ -72,12 +76,16 @@ static Hyperplane* parse_hyperplane(FILE* file) {
 
 	float location;
 	size_t axis;
-	
 	Pixel color;
 
-	assert(parse_float(file, &location));
-	assert(parse_usize(file, &axis));
-	assert(parse_pixel(file, &color));
+	bool success = true;
+	success = success && parse_float(file, &location);
+	success = success && parse_usize(file, &axis);
+	success = success && parse_pixel(file, &color);
+	if(!success) {
+		fprintf(stderr, "[ERROR] Failed to Parse Arguments of Hyperplane.\n");
+		return NULL;
+	}
 
 	// TODO: Populate roughness
 	Material material = { .color = color };
@@ -115,7 +123,9 @@ int scene_deserialize(Group* scene, const char* file_path) {
 			return 1;
 		}
 
-		group_add(scene, object);
+		if(object != NULL) {
+			group_add(scene, object);
+		}
 	}
 
 	fclose(file);
