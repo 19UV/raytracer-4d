@@ -69,7 +69,10 @@ int main(int argc, char* argv[]) {
 
 	Group scene;
 	scene_deserialize(&scene, "./scenes/sphere.txt");
+
+#ifndef NDEBUG
 	scene_print(&scene);
+#endif
 
 	Ray ray;
 	glm_vec4_copy(camera_pos, ray.origin);
