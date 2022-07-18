@@ -4,6 +4,7 @@
 #include <cglm/cglm.h>
 
 #include "image.h"
+#include "malloc.h"
 
 #include "util/random.h"
 

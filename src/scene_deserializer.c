@@ -8,6 +8,7 @@
 #include <assert.h>
 
 #include "image.h"
+#include "malloc.h"
 
 #include "objects/object.h"
 #include "objects/hypersphere.h"

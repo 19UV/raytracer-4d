@@ -5,6 +5,8 @@
 #include <float.h>
 #include <assert.h>
 
+#include "malloc.h"
+
 int group_create(Group* this) {
 	assert(this != NULL);
 
