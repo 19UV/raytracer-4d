@@ -41,7 +41,7 @@ jobs:
           cp build/raytracer4d artifact/
         fi
         
-        cp scenes/ artifact/
+        cp -r scenes/ artifact/
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
