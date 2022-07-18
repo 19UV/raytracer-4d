@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stddef.h>
+
 #define MALLOC( size) malloc_debug( ( size), __FILE__, __LINE__)
 #define CALLOC( items, size) calloc_debug( ( items), ( size), __FILE__, __LINE__)
 #define REALLOC( ptr, size) realloc_debug( ( ptr), ( size), __FILE__, __LINE__)
