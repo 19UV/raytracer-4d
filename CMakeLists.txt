@@ -15,6 +15,13 @@ if(MSVC)
 	set(DEFINE ${DEFINE} _CRT_SECURE_NO_WARNINGS)
 endif()
 
+if(NOT MSVC)
+	# We need to link with the C maths library (m)
+	# which Windows graciously proceeds to have a panic
+	# attack if it comes within 50 feet of
+	set(DEPEND ${DEPEND} m)
+endif()
+
 set(EXTERN_CGLM extern/cglm)
 
 ############## 
